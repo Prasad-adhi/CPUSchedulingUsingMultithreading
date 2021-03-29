@@ -5,21 +5,21 @@ import time
 
 def findWaitingTime_FCFS(processes, n, bt, wt):
     pygame.init()
-    screen = pygame.display.set_mode((350, 350))
+    screen1 = pygame.display.set_mode((350, 350))
     clock = pygame.time.Clock()
-    screen.fill((255, 255, 255))
+    screen1.fill((255, 255, 255))
     grid=np.zeros((35,35))
     wt[0] = 0
     tat = [0] * n
     grid[0,wt[0]:bt[0]]=1
     done=False
     while not done:
-        pygame.draw.rect(screen, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
+        pygame.draw.rect(screen1, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
         pygame.display.flip()
         for i in range(1, n ):
             wt[i] = bt[i - 1] + wt[i - 1] 
             pygame.time.delay(2000)
-            pygame.draw.rect(screen, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
+            pygame.draw.rect(screen1, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
             pygame.display.flip()
             clock.tick(60)
         for event in pygame.event.get():
@@ -30,7 +30,7 @@ def findTurnAroundTime_FCFS(processes, n, bt, wt, tat):
     for i in range(n):
         tat[i] = bt[i] + wt[i]
 
-def FCFS( processes, n, bt):
+def fcfs( processes, n, bt):
     wt = [0] * n
     tat = [0] * n 
     total_wt = 0
@@ -81,4 +81,4 @@ if __name__ =="__main__":
     processes = [ 1, 2, 3, 4]
     n = len(processes)
     burst_time = [3, 8, 4, 6]
-    FCFS(processes, n, burst_time)
+    fcfs(processes, n, burst_time)

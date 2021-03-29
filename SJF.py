@@ -1,7 +1,7 @@
 import pygame
 import tkinter as tk
 import time
-def SJF(processes,n,bt):
+def sjf(processes,n,bt):
     #Applying bubble sort to sort process according to their burst time
     for i in range(0,n-1): 
         for j in range(0,n-i-1):
@@ -22,26 +22,26 @@ def SJF(processes,n,bt):
     tat.insert(0,bt[0])
 
     pygame.init()
-    screen = pygame.display.set_mode((350, 350))
+    screen2 = pygame.display.set_mode((350, 350))
     clock = pygame.time.Clock()
-    screen.fill((255, 255, 255))
+    screen2.fill((255, 255, 255))
     done=False
     while not done:
-            pygame.draw.rect(screen, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
+            pygame.draw.rect(screen2, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
             pygame.display.flip()
             for i in range(1,n):  
                 wt.insert(i,wt[i-1]+bt[i-1])
                 tat.insert(i,wt[i]+bt[i])
                 wt[i] = bt[i - 1] + wt[i - 1] 
                 pygame.time.delay(2000)
-                pygame.draw.rect(screen, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
+                pygame.draw.rect(screen2, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
                 pygame.display.flip()
                 clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done = True
 
-    #Tkinter screen for printing details
+    #Tkinter screen2 for printing details
     root=tk.Tk()
     string="Processes Burst time " + " Waiting time " + " Turn around time"
     tk.Label(root, text=string).pack()
@@ -65,4 +65,4 @@ if __name__ =="__main__":
     processes = [ 1, 2, 3, 4]
     n = len(processes)
     burst_time = [3, 8, 4, 6]
-    SJF(processes, n, burst_time)
+    sjf(processes, n, burst_time)
