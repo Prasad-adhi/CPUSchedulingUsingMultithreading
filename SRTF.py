@@ -1,4 +1,5 @@
 import pygame
+import tkinter as tk
 # Function to find the waiting time 
 # for all processes 
 def findWaitingTime(processes, n, wt): 
@@ -104,7 +105,7 @@ def findavgTime(processes, n):
     # Function to find turn around time
     # for all processes 
     findTurnAroundTime(processes, n, wt, tat) 
-  
+    '''
     # Display processes along with all details 
     print("Processes    Burst Time     Waiting", 
                     "Time     Turn-Around Time")
@@ -120,6 +121,23 @@ def findavgTime(processes, n):
   
     print("\nAverage waiting time = %.5f "%(total_wt /n) )
     print("Average turn around time = ", total_tat / n) 
+    '''
+    total_wt = 0
+    total_tat = 0
+    root=tk.Tk()
+    string="Processes Burst time " + " Waiting time " + " Turn around time"
+    tk.Label(root, text=string).pack()
+    for i in range(n):
+        string=""
+        # Calculate total waiting time and total turn around time
+        total_wt = total_wt + wt[i]
+        total_tat = total_tat + tat[i]
+        string+=str(processes[i][0])+"\t"+str(processes[i][1])+"\t"+str(wt[i])+"\t\t"+str(tat[i])
+        tk.Label(root,text=string).pack()
+    
+    tk.Label(root,text="Average waiting time = "+str(total_wt / n)).pack()
+    tk.Label(root,text="Average turn around time = "+str(total_tat / n)).pack()
+    root.mainloop()
       
 # Driver code 
 if __name__ =="__main__":
