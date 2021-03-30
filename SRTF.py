@@ -18,9 +18,12 @@ def findWaitingTime(processes, n, wt):
     done=False
     i=0
     k=0
+    order=[]
+    order.append(0)
     # Process until all processes gets 
     # completed 
     while not done:
+        pygame.event.get()
         while (complete != n):
             
             # Find process with minimum remaining 
@@ -30,25 +33,24 @@ def findWaitingTime(processes, n, wt):
                 if ((processes[j][2] <= t) and 
                     (rt[j] < minm) and rt[j] > 0):
                     minm = rt[j]
-                    #short = j
+                    short = j
                     check = True
-                    break
             if (check == False):
                 t += 1
                 continue
                 
             # Reduce remaining time by one 
-            rt[j] -= 1
-            if(short==j):
+            rt[short] -= 1
+            order.append(short)
+            if(order[-2]==short):
                 pygame.draw.rect(screen, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
-                #pygame.time.delay(2000)
+                pygame.time.delay(500)
                 pygame.display.flip()
                 k+=1
             else:
                 i+=1
-                short=j
                 pygame.draw.rect(screen, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
-                #pygame.time.delay(2000)
+                pygame.time.delay(500)
                 pygame.display.flip()
                 k+=1
 
@@ -78,9 +80,9 @@ def findWaitingTime(processes, n, wt):
             
             # Increment time 
             t += 1
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
   
 # Function to calculate turn around time 
 def findTurnAroundTime(processes, n, wt, tat): 
@@ -123,8 +125,10 @@ def findavgTime(processes, n):
 if __name__ =="__main__":
       
     # Process id's 
-    proc = [[1, 6, 1], [2, 8, 1],
-            [3, 7, 2], [4, 3, 3]]
+    proc = [[1, 8, 0], 
+            [2, 4, 1],
+            [3, 2, 2], 
+            [4, 1, 3]]
     n = 4
     findavgTime(proc, n)
       
