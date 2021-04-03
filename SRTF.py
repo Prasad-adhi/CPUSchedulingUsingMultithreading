@@ -3,6 +3,7 @@ import tkinter as tk
 # Function to find the waiting time 
 # for all processes 
 def findWaitingTime(processes, n, wt): 
+    color=[(255,0,0),(255,69,0),(0,128,0),(0,0,128),(255,255,0)]
     def drawGrid():
         blockSize = 10 #Set the size of the grid block
         for x in range(0, 350, 10):
@@ -53,13 +54,13 @@ def findWaitingTime(processes, n, wt):
             rt[short] -= 1
             order.append(short)
             if(order[-2]==short):
-                pygame.draw.rect(screen3, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
+                pygame.draw.rect(screen3, color[short], pygame.Rect(k*10,i*10, 10,10))
                 pygame.time.delay(500)
                 pygame.display.flip()
                 k+=1
             else:
                 i+=1
-                pygame.draw.rect(screen3, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
+                pygame.draw.rect(screen3, color[short], pygame.Rect(k*10,i*10, 10,10))
                 pygame.time.delay(500)
                 pygame.display.flip()
                 k+=1

@@ -4,6 +4,7 @@ import pygame
 import time
 
 def findWaitingTime_FCFS(processes, n, bt, wt):
+    color=[(255,0,0),(255,69,0),(0,128,0),(0,0,128),(255,255,0)]
     pygame.init()
     screen1 = pygame.display.set_mode((350, 350))
     clock = pygame.time.Clock()
@@ -26,12 +27,12 @@ def findWaitingTime_FCFS(processes, n, bt, wt):
     while not done:
         pygame.event.get()
         drawGrid()
-        pygame.draw.rect(screen1, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
+        pygame.draw.rect(screen1, color[0], pygame.Rect(0, wt[0], (bt[0])*10,10))
         pygame.display.flip()
         for i in range(1, n ):
             wt[i] = bt[i - 1] + wt[i - 1] 
             pygame.time.delay(2000)
-            pygame.draw.rect(screen1, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
+            pygame.draw.rect(screen1, color[i], pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
             #waiting time is used to span the distance from the y axis, burst time is used to draw the rectangle proportional to the burst time
             pygame.display.flip()
             clock.tick(60)

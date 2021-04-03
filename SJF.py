@@ -2,6 +2,7 @@ import pygame
 import tkinter as tk
 import time
 def sjf(processes,n,bt):
+    color=[(255,0,0),(255,69,0),(0,128,0),(0,0,128),(255,255,0)]
     def drawGrid():
         blockSize = 10 #Set the size of the grid block
         for x in range(0, 350, 10):
@@ -34,14 +35,14 @@ def sjf(processes,n,bt):
     while not done:
         pygame.event.get()
         drawGrid()
-        pygame.draw.rect(screen2, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
+        pygame.draw.rect(screen2, color[0], pygame.Rect(0, wt[0], (bt[0])*10,10))
         pygame.display.flip()
         for i in range(1,n):  
             wt.insert(i,wt[i-1]+bt[i-1])
             tat.insert(i,wt[i]+bt[i])
             wt[i] = bt[i - 1] + wt[i - 1] 
             pygame.time.delay(2000)
-            pygame.draw.rect(screen2, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
+            pygame.draw.rect(screen2, color[i], pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
             pygame.display.flip()
             clock.tick(60)
         string="Processes Burst time " + " Waiting time " + " Turn around time"
