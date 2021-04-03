@@ -4,10 +4,12 @@ import tkinter as tk
 # for all processes 
 def findWaitingTime(processes, n, wt): 
     rt = [0] * n
+    tat = [0] * n
     pygame.init()
-    screen = pygame.display.set_mode((350, 350))
+    screen3 = pygame.display.set_mode((350, 350))
     clock = pygame.time.Clock()
-    screen.fill((255, 255, 255))
+    font = pygame.font.Font('freesansbold.ttf', 13)
+    screen3.fill((255, 255, 255))
     # Copy the burst time into rt[] 
     for i in range(n): 
         rt[i] = processes[i][1]
@@ -44,13 +46,13 @@ def findWaitingTime(processes, n, wt):
             rt[short] -= 1
             order.append(short)
             if(order[-2]==short):
-                pygame.draw.rect(screen, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
+                pygame.draw.rect(screen3, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
                 pygame.time.delay(500)
                 pygame.display.flip()
                 k+=1
             else:
                 i+=1
-                pygame.draw.rect(screen, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
+                pygame.draw.rect(screen3, (0, 50*short, 50), pygame.Rect(k*10,i*10, 10,10))
                 pygame.time.delay(500)
                 pygame.display.flip()
                 k+=1
@@ -81,6 +83,56 @@ def findWaitingTime(processes, n, wt):
             
             # Increment time 
             t += 1
+        findTurnAroundTime(processes, n, wt, tat)
+        string="Processes Burst time " + " Waiting time " + " Turn around time"
+        text = font.render(string, True, (0, 255, 0), (0, 0, 128))
+        textRect = text.get_rect()
+        textRect.center = (350 // 2, 350 // 2)
+        screen3.blit(text, textRect)
+        total_wt = 0
+        total_tat = 0
+        
+        for i in range(n):
+            total_wt = total_wt + wt[i]
+            total_tat = total_tat + tat[i]
+            # To print process id
+            text = font.render(str(i+1), True, (0, 255, 255), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (50, 175+((i+1)*15))
+            screen3.blit(text, textRect)
+            pygame.display.flip()
+
+            #To print Burst time
+            text = font.render(str(processes[i][1]), True, (0, 255, 255), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (100, 175+((i+1)*15))
+            screen3.blit(text, textRect)
+            pygame.display.flip()
+            #To print wait time
+            text = font.render(str(wt[i]), True, (0, 255, 255), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (185, 175+((i+1)*15))
+            screen3.blit(text, textRect)
+            pygame.display.flip()
+            #To print turn around time
+            text = font.render(str(tat[i]), True, (0, 255, 255), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (280, 175+((i+1)*15))
+            screen3.blit(text, textRect)
+            pygame.display.flip()
+        # To print the Average waiting time
+        text = font.render("Average waiting time = "+str(total_wt / n), True, (0, 255, 255), (0, 0, 128))
+        textRect = text.get_rect()
+        textRect.center = (175, 280)
+        screen3.blit(text, textRect)
+        pygame.display.flip()
+        #To print average turn around time
+        text = font.render("Average turn around time = "+str(total_tat / n), True, (0, 255, 255), (0, 0, 128))
+        textRect = text.get_rect()
+        textRect.center = (175, 300)
+        screen3.blit(text, textRect)
+        pygame.display.flip()
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
@@ -102,42 +154,6 @@ def findavgTime(processes, n):
     # of all processes 
     findWaitingTime(processes, n, wt) 
   
-    # Function to find turn around time
-    # for all processes 
-    findTurnAroundTime(processes, n, wt, tat) 
-    '''
-    # Display processes along with all details 
-    print("Processes    Burst Time     Waiting", 
-                    "Time     Turn-Around Time")
-    total_wt = 0
-    total_tat = 0
-    for i in range(n):
-  
-        total_wt = total_wt + wt[i] 
-        total_tat = total_tat + tat[i] 
-        print(" ", processes[i][0], "\t\t", 
-                   processes[i][1], "\t\t", 
-                   wt[i], "\t\t", tat[i])
-  
-    print("\nAverage waiting time = %.5f "%(total_wt /n) )
-    print("Average turn around time = ", total_tat / n) 
-    '''
-    total_wt = 0
-    total_tat = 0
-    root=tk.Tk()
-    string="Processes Burst time " + " Waiting time " + " Turn around time"
-    tk.Label(root, text=string).pack()
-    for i in range(n):
-        string=""
-        # Calculate total waiting time and total turn around time
-        total_wt = total_wt + wt[i]
-        total_tat = total_tat + tat[i]
-        string+=str(processes[i][0])+"\t"+str(processes[i][1])+"\t"+str(wt[i])+"\t\t"+str(tat[i])
-        tk.Label(root,text=string).pack()
-    
-    tk.Label(root,text="Average waiting time = "+str(total_wt / n)).pack()
-    tk.Label(root,text="Average turn around time = "+str(total_tat / n)).pack()
-    root.mainloop()
       
 # Driver code 
 if __name__ =="__main__":
