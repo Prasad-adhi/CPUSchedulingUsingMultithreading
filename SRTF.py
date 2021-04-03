@@ -3,6 +3,12 @@ import tkinter as tk
 # Function to find the waiting time 
 # for all processes 
 def findWaitingTime(processes, n, wt): 
+    def drawGrid():
+        blockSize = 10 #Set the size of the grid block
+        for x in range(0, 350, 10):
+            for y in range(0, 160, blockSize):
+                rect = pygame.Rect(x, y, blockSize, blockSize)
+                pygame.draw.rect(screen3, (0,0,0), rect, 1)
     rt = [0] * n
     tat = [0] * n
     pygame.init()
@@ -27,6 +33,7 @@ def findWaitingTime(processes, n, wt):
     # completed 
     while not done:
         pygame.event.get()
+        drawGrid()
         while (complete != n):
             
             # Find process with minimum remaining 

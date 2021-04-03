@@ -8,6 +8,12 @@ def findWaitingTime_FCFS(processes, n, bt, wt):
     screen1 = pygame.display.set_mode((350, 350))
     clock = pygame.time.Clock()
     screen1.fill((255, 255, 255))
+    def drawGrid():
+        blockSize = 10 #Set the size of the grid block
+        for x in range(0, 350, 10):
+            for y in range(0, 160, blockSize):
+                rect = pygame.Rect(x, y, blockSize, blockSize)
+                pygame.draw.rect(screen1, (0,0,0), rect, 1)
     font = pygame.font.Font('freesansbold.ttf', 13)
     
     grid=np.zeros((35,35))
@@ -19,6 +25,7 @@ def findWaitingTime_FCFS(processes, n, bt, wt):
 
     while not done:
         pygame.event.get()
+        drawGrid()
         pygame.draw.rect(screen1, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
         pygame.display.flip()
         for i in range(1, n ):

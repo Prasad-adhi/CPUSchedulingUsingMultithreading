@@ -2,6 +2,12 @@ import pygame
 import tkinter as tk
 import time
 def sjf(processes,n,bt):
+    def drawGrid():
+        blockSize = 10 #Set the size of the grid block
+        for x in range(0, 350, 10):
+            for y in range(0, 160, blockSize):
+                rect = pygame.Rect(x, y, blockSize, blockSize)
+                pygame.draw.rect(screen2, (0,0,0), rect, 1)
     #Applying bubble sort to sort process according to their burst time
     for i in range(0,n-1): 
         for j in range(0,n-i-1):
@@ -27,6 +33,7 @@ def sjf(processes,n,bt):
     done=False
     while not done:
         pygame.event.get()
+        drawGrid()
         pygame.draw.rect(screen2, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
         pygame.display.flip()
         for i in range(1,n):  
