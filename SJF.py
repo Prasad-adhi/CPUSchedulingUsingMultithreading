@@ -15,8 +15,6 @@ def sjf(processes,n,bt):
     
     #pygame-gantt chart
     wt,tat=[],[] 
-    total_wt=0
-    total_tat=0
 
     wt.insert(0,0)
     tat.insert(0,bt[0])
@@ -24,41 +22,66 @@ def sjf(processes,n,bt):
     pygame.init()
     screen2 = pygame.display.set_mode((350, 350))
     clock = pygame.time.Clock()
+    font = pygame.font.Font('freesansbold.ttf', 13)
     screen2.fill((255, 255, 255))
     done=False
     while not done:
-            pygame.draw.rect(screen2, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
+        pygame.event.get()
+        pygame.draw.rect(screen2, (0, 128, 0), pygame.Rect(0, wt[0], (bt[0])*10,10))
+        pygame.display.flip()
+        for i in range(1,n):  
+            wt.insert(i,wt[i-1]+bt[i-1])
+            tat.insert(i,wt[i]+bt[i])
+            wt[i] = bt[i - 1] + wt[i - 1] 
+            pygame.time.delay(2000)
+            pygame.draw.rect(screen2, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
             pygame.display.flip()
-            for i in range(1,n):  
-                wt.insert(i,wt[i-1]+bt[i-1])
-                tat.insert(i,wt[i]+bt[i])
-                wt[i] = bt[i - 1] + wt[i - 1] 
-                pygame.time.delay(2000)
-                pygame.draw.rect(screen2, (0, 50*i, 50), pygame.Rect(wt[i]*10,i*10,  (bt[i])*10,10))
-                pygame.display.flip()
-                clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    done = True
+            clock.tick(60)
+        string="Processes Burst time " + " Waiting time " + " Turn around time"
+        text = font.render(string, True, (0, 255, 0), (0, 0, 128))
+        textRect = text.get_rect()
+        textRect.center = (350 // 2, 350 // 2)
+        screen2.blit(text, textRect)
+        total_wt = 0
+        total_tat = 0
+        for i in range(n):
+            total_wt = total_wt + wt[i]
+            total_tat = total_tat + tat[i]
+            
+            text = font.render(str(i+1), True, (0, 255, 0), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (50, 175+((i+1)*15))
+            screen2.blit(text, textRect)
 
-    #Tkinter screen2 for printing details
-    root=tk.Tk()
-    string="Processes Burst time " + " Waiting time " + " Turn around time"
-    tk.Label(root, text=string).pack()
-    for i in range(n):
-        string=""
-        # Calculate total waiting time and total turn around time
-        total_wt = total_wt + wt[i]
-        total_tat = total_tat + tat[i]
-        string+=" "+ str(i + 1) + "\t" + \
-                    str(bt[i]) + "\t " + \
-                    str(wt[i]) + "\t\t " + \
-                    str(tat[i]) 
-        tk.Label(root,text=string).pack()
-    
-    tk.Label(root,text="Average waiting time = "+str(total_wt / n)).pack()
-    tk.Label(root,text="Average turn around time = "+str(total_tat / n)).pack()
-    root.mainloop()
+
+            text = font.render(str(bt[i]), True, (0, 255, 0), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (100, 175+((i+1)*15))
+            screen2.blit(text, textRect)
+
+            text = font.render(str(wt[i]), True, (0, 255, 0), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (185, 175+((i+1)*15))
+            screen2.blit(text, textRect)
+
+            text = font.render(str(tat[i]), True, (0, 255, 0), (0, 0, 128))
+            textRect = text.get_rect()
+            textRect.center = (280, 175+((i+1)*15))
+            screen2.blit(text, textRect)
+
+        text = font.render("Average waiting time = "+str(total_wt / n), True, (0, 255, 0), (0, 0, 128))
+        textRect = text.get_rect()
+        textRect.center = (175, 280)
+        screen2.blit(text, textRect)
+
+        text = font.render("Average turn around time = "+str(total_tat / n), True, (0, 255, 0), (0, 0, 128))
+        textRect = text.get_rect()
+        textRect.center = (175, 300)
+        screen2.blit(text, textRect)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
 
 #Driver Code
 if __name__ =="__main__":
