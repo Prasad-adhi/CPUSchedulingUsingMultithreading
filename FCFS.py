@@ -4,7 +4,7 @@ import pygame
 import time
 
 def findWaitingTime_FCFS(processes, n, bt, wt):
-    color=[(255,0,0),(255,69,0),(0,128,0),(0,0,128),(255,255,0)]
+    color=[(255,0,0),(25, 255, 228),(0,128,0),(0,0,128),(255,255,0)]
     pygame.init()
     screen1 = pygame.display.set_mode((350, 350))
     clock = pygame.time.Clock()
@@ -36,6 +36,7 @@ def findWaitingTime_FCFS(processes, n, bt, wt):
             #waiting time is used to span the distance from the y axis, burst time is used to draw the rectangle proportional to the burst time
             pygame.display.flip()
             clock.tick(60)
+
         findTurnAroundTime_FCFS(processes, n, bt, wt, tat)
         string="Processes Burst time " + " Waiting time " + " Turn around time"
         text = font.render(string, True, (0, 255, 0), (0, 0, 128))
@@ -58,21 +59,25 @@ def findWaitingTime_FCFS(processes, n, bt, wt):
             textRect = text.get_rect()
             textRect.center = (100, 175+((i+1)*15))
             screen1.blit(text, textRect)
+
             #To print wait time
             text = font.render(str(wt[i]), True, (0, 255, 0), (0, 0, 128))
             textRect = text.get_rect()
             textRect.center = (185, 175+((i+1)*15))
             screen1.blit(text, textRect)
+
             #To print turn around time
             text = font.render(str(tat[i]), True, (0, 255, 0), (0, 0, 128))
             textRect = text.get_rect()
             textRect.center = (280, 175+((i+1)*15))
             screen1.blit(text, textRect)
+
         # To print the Average waiting time
         text = font.render("Average waiting time = "+str(total_wt / n), True, (0, 255, 0), (0, 0, 128))
         textRect = text.get_rect()
         textRect.center = (175, 280)
         screen1.blit(text, textRect)
+
         #To print average turn around time
         text = font.render("Average turn around time = "+str(total_tat / n), True, (0, 255, 0), (0, 0, 128))
         textRect = text.get_rect()

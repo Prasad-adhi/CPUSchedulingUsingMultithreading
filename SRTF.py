@@ -1,9 +1,8 @@
 import pygame
 import tkinter as tk
-# Function to find the waiting time 
-# for all processes 
+# Function to find the waiting time for all processes 
 def findWaitingTime(processes, n, wt): 
-    color=[(255,0,0),(255,69,0),(0,128,0),(0,0,128),(255,255,0)]
+    color=[(255,0,0),(25, 255, 228),(0,128,0),(0,0,128),(255,255,0)]
     def drawGrid():
         blockSize = 10 #Set the size of the grid block
         for x in range(0, 350, 10):
@@ -17,6 +16,7 @@ def findWaitingTime(processes, n, wt):
     clock = pygame.time.Clock()
     font = pygame.font.Font('freesansbold.ttf', 13)
     screen3.fill((255, 255, 255))
+    
     # Copy the burst time into rt[] 
     for i in range(n): 
         rt[i] = processes[i][1]
@@ -30,16 +30,14 @@ def findWaitingTime(processes, n, wt):
     k=0
     order=[]
     order.append(0)
-    # Process until all processes gets 
-    # completed 
+
+    # Process until all processes gets  completed 
     while not done:
         pygame.event.get()
         drawGrid()
         while (complete != n):
             
-            # Find process with minimum remaining 
-            # time among the processes that 
-            # arrives till the current time`
+            # Find process with minimum remaining time among the processes that arrives till the current time`
             for j in range(n):
                 if ((processes[j][2] <= t) and 
                     (rt[j] < minm) and rt[j] > 0):
@@ -70,16 +68,14 @@ def findWaitingTime(processes, n, wt):
             if (minm == 0): 
                 minm = 999999999
 
-            # If a process gets completely 
-            # executed 
+            # If a process gets completely executed 
             if (rt[short] == 0): 
 
                 # Increment complete 
                 complete += 1
                 check = False
 
-                # Find finish time of current 
-                # process 
+                # Find finish time of current process 
                 fint = t + 1
 
                 # Calculate waiting time 
@@ -103,6 +99,7 @@ def findWaitingTime(processes, n, wt):
         for i in range(n):
             total_wt = total_wt + wt[i]
             total_tat = total_tat + tat[i]
+
             # To print process id
             text = font.render(str(i+1), True, (0, 255, 255), (0, 0, 128))
             textRect = text.get_rect()
@@ -116,24 +113,28 @@ def findWaitingTime(processes, n, wt):
             textRect.center = (100, 175+((i+1)*15))
             screen3.blit(text, textRect)
             pygame.display.flip()
+
             #To print wait time
             text = font.render(str(wt[i]), True, (0, 255, 255), (0, 0, 128))
             textRect = text.get_rect()
             textRect.center = (185, 175+((i+1)*15))
             screen3.blit(text, textRect)
             pygame.display.flip()
+
             #To print turn around time
             text = font.render(str(tat[i]), True, (0, 255, 255), (0, 0, 128))
             textRect = text.get_rect()
             textRect.center = (280, 175+((i+1)*15))
             screen3.blit(text, textRect)
             pygame.display.flip()
+
         # To print the Average waiting time
         text = font.render("Average waiting time = "+str(total_wt / n), True, (0, 255, 255), (0, 0, 128))
         textRect = text.get_rect()
         textRect.center = (175, 280)
         screen3.blit(text, textRect)
         pygame.display.flip()
+
         #To print average turn around time
         text = font.render("Average turn around time = "+str(total_tat / n), True, (0, 255, 255), (0, 0, 128))
         textRect = text.get_rect()
@@ -152,14 +153,12 @@ def findTurnAroundTime(processes, n, wt, tat):
     for i in range(n):
         tat[i] = processes[i][1] + wt[i] 
   
-# Function to calculate average waiting 
-# and turn-around times. 
+# Function to calculate average waiting and turn-around times. 
 def findavgTime(processes, n): 
     wt = [0] * n
     tat = [0] * n 
   
-    # Function to find waiting time 
-    # of all processes 
+    # Function to find waiting time of all processes 
     findWaitingTime(processes, n, wt) 
   
       
@@ -167,12 +166,6 @@ def findavgTime(processes, n):
 if __name__ =="__main__":
       
     # Process id's 
-    proc = [[1, 8, 0], 
-            [2, 4, 1],
-            [3, 2, 2], 
-            [4, 1, 3]]
+    proc = [[1, 8, 0], [2, 4, 1], [3, 2, 2], [4, 1, 3]]
     n = 4
     findavgTime(proc, n)
-      
-# This code is contributed
-# Shubham Singh(SHUBHAMSINGH10)
